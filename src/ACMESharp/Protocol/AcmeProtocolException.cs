@@ -1,5 +1,4 @@
 using System;
-using System.Runtime.Serialization;
 using ACMESharp.Protocol.Resources;
 
 namespace ACMESharp.Protocol
@@ -21,12 +20,6 @@ namespace ACMESharp.Protocol
 
         public AcmeProtocolException(string message, Exception innerException, Problem problem = null)
             : base(message, innerException)
-        {
-            Init(problem);
-        }
-
-        protected AcmeProtocolException(SerializationInfo info, StreamingContext context, Problem problem = null)
-            : base(info, context)
         {
             Init(problem);
         }
