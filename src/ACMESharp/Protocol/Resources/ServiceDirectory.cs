@@ -60,6 +60,9 @@ namespace ACMESharp.Protocol.Resources
         public string[] CaaIdentities { get; set; }
 
         [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        public Dictionary<string, string> Profiles { get; set; }
+
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public bool? ExternalAccountRequired { get; set; }
     }
 }
