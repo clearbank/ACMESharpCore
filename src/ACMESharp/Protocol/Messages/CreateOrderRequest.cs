@@ -1,6 +1,7 @@
 using System.ComponentModel.DataAnnotations;
-using ACMESharp.Crypto.JOSE;
+
 using ACMESharp.Protocol.Resources;
+
 using Newtonsoft.Json;
 
 namespace ACMESharp.Protocol.Messages
@@ -13,6 +14,9 @@ namespace ACMESharp.Protocol.Messages
         [JsonProperty("identifiers", Required = Required.Always)]
         [Required, MinLength(1)]
         public Identifier[] Identifiers { get; set; }
+
+        [JsonProperty("profile", NullValueHandling = NullValueHandling.Ignore)]
+        public string Profile { get; set; }
 
         [JsonProperty("notBefore", NullValueHandling = NullValueHandling.Ignore)]
         public string NotBefore { get; set; }

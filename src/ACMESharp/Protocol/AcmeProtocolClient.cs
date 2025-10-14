@@ -380,6 +380,7 @@ namespace ACMESharp.Protocol
         /// https://tools.ietf.org/html/draft-ietf-acme-acme-12#section-7.1.3
         /// </remarks>
         public async Task<OrderDetails> CreateOrderAsync(IEnumerable<Identifier> identifiers,
+            string preferredProfile = null,
             DateTime? notBefore = null,
             DateTime? notAfter = null,
             CancellationToken cancel = default(CancellationToken))
@@ -387,6 +388,7 @@ namespace ACMESharp.Protocol
             var message = new CreateOrderRequest
             {
                 Identifiers = identifiers.ToArray(),
+                Profile = preferredProfile,
                 NotBefore = notBefore?.ToString(Constants.Rfc3339DateTimeFormat),
                 NotAfter = notAfter?.ToString(Constants.Rfc3339DateTimeFormat),
             };
@@ -412,11 +414,12 @@ namespace ACMESharp.Protocol
         /// https://tools.ietf.org/html/draft-ietf-acme-acme-12#section-7.1.3
         /// </remarks>
         public Task<OrderDetails> CreateOrderAsync(IEnumerable<string> dnsIdentifiers,
+            string preferredProfile = null,
             DateTime? notBefore = null,
             DateTime? notAfter = null,
             CancellationToken cancel = default(CancellationToken)) => CreateOrderAsync(
                 dnsIdentifiers.Select(dns => new Identifier() { Type = "dns", Value = dns }).ToArray(),
-                notBefore, notAfter, cancel);
+                preferredProfile, notBefore, notAfter, cancel);
 
         /// <summary>
         /// Retrieves the current status and details of an existing Order.
