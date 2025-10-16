@@ -15,6 +15,9 @@ namespace ACMESharp.Protocol.Messages
         [Required, MinLength(1)]
         public Identifier[] Identifiers { get; set; }
 
+        [JsonProperty("replaces", NullValueHandling = NullValueHandling.Ignore)]
+        public string Replaces { get; set; }
+
         [JsonProperty("profile", NullValueHandling = NullValueHandling.Ignore)]
         public string Profile { get; set; }
 

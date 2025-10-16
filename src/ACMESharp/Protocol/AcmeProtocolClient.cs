@@ -144,6 +144,15 @@ namespace ACMESharp.Protocol
                     cancel: cancel);
         }
 
+        public async Task<RenewalInfo> GetRenewalInfoAsync(
+            CancellationToken cancel = default(CancellationToken))
+        {
+            return await SendAcmeAsync<RenewalInfo>(
+                new Uri(Directory.RenewalInfo),
+                skipNonce: true,
+                cancel: cancel);
+        }
+
         /// <summary>
         /// Convenience routine to retrieve the raw bytes of the Terms of Service
         /// endpoint defined in an ACME Resource Directory meta details.
@@ -380,6 +389,7 @@ namespace ACMESharp.Protocol
         /// https://tools.ietf.org/html/draft-ietf-acme-acme-12#section-7.1.3
         /// </remarks>
         public async Task<OrderDetails> CreateOrderAsync(IEnumerable<Identifier> identifiers,
+            string replaces = null,
             string preferredProfile = null,
             DateTime? notBefore = null,
             DateTime? notAfter = null,
@@ -388,6 +398,7 @@ namespace ACMESharp.Protocol
             var message = new CreateOrderRequest
             {
                 Identifiers = identifiers.ToArray(),
+                Replaces = replaces,
                 Profile = preferredProfile,
                 NotBefore = notBefore?.ToString(Constants.Rfc3339DateTimeFormat),
                 NotAfter = notAfter?.ToString(Constants.Rfc3339DateTimeFormat),
@@ -414,12 +425,13 @@ namespace ACMESharp.Protocol
         /// https://tools.ietf.org/html/draft-ietf-acme-acme-12#section-7.1.3
         /// </remarks>
         public Task<OrderDetails> CreateOrderAsync(IEnumerable<string> dnsIdentifiers,
+            string replaces = null,
             string preferredProfile = null,
             DateTime? notBefore = null,
             DateTime? notAfter = null,
             CancellationToken cancel = default(CancellationToken)) => CreateOrderAsync(
                 dnsIdentifiers.Select(dns => new Identifier() { Type = "dns", Value = dns }).ToArray(),
-                preferredProfile, notBefore, notAfter, cancel);
+                replaces ,preferredProfile, notBefore, notAfter, cancel);
 
         /// <summary>
         /// Retrieves the current status and details of an existing Order.
