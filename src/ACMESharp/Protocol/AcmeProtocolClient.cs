@@ -145,10 +145,11 @@ namespace ACMESharp.Protocol
         }
 
         public async Task<RenewalInfo> GetRenewalInfoAsync(
+            string certificateId,
             CancellationToken cancel = default(CancellationToken))
         {
             return await SendAcmeAsync<RenewalInfo>(
-                new Uri(Directory.RenewalInfo),
+                new Uri($"{Directory.RenewalInfo}/{certificateId}"),
                 skipNonce: true,
                 cancel: cancel);
         }
@@ -431,7 +432,7 @@ namespace ACMESharp.Protocol
             DateTime? notAfter = null,
             CancellationToken cancel = default(CancellationToken)) => CreateOrderAsync(
                 dnsIdentifiers.Select(dns => new Identifier() { Type = "dns", Value = dns }).ToArray(),
-                replaces ,preferredProfile, notBefore, notAfter, cancel);
+                replaces, preferredProfile, notBefore, notAfter, cancel);
 
         /// <summary>
         /// Retrieves the current status and details of an existing Order.
