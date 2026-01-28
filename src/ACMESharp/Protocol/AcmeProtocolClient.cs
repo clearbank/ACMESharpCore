@@ -385,8 +385,6 @@ namespace ACMESharp.Protocol
             DateTime? notAfter = null,
             CancellationToken cancel = default(CancellationToken))
         {
-            _log.LogInformation($"Creating Order using preferredProfile: {preferredProfile ?? null}.");
-
             var message = new CreateOrderRequest
             {
                 Identifiers = identifiers.ToArray(),
